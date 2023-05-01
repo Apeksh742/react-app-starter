@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "React-Starter-App"
+  description: "Testing template for react app"
+  annotations:
+    github.com/project-slug: apeksh742/react-app-starter
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: website
+  lifecycle: experimental
+  owner: "group:default/devops"
