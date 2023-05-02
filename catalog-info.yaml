@@ -3,6 +3,10 @@ kind: Component
 metadata:
   name: "React-Starter-App"
   description: "Testing template for react app"
+  links:
+    - url: https://play.grafana.org/d/Oc_5E1snz/web-app-correlation?orgId=1
+      title: Grafana
+      icon: dashboard
   annotations:
     github.com/project-slug: apeksh742/react-app-starter
     backstage.io/techdocs-ref: dir:.
