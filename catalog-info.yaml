@@ -11,6 +11,7 @@ metadata:
     github.com/project-slug: apeksh742/react-app-starter
     backstage.io/techdocs-ref: dir:.
     grafana/dashboard-selector: backstage-demo
+    grafana/alert-label-selector: "app=prom"
 spec:
   type: website
   lifecycle: experimental
