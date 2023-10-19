@@ -12,6 +12,22 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v39
+
+    - name: List all added files
+      run: |
+        for file in ${{ steps.changed-files.outputs.added_files }}; do
+          echo "$file was added"
+        done
+        
+    - name: List all added files
+      run: |
+        for file in ${{ steps.changed-files.outputs.modified_files }}; do
+          echo "$file was modifies"
+        done
       
     - name: Send Slack Notification
       env:
@@ -25,14 +41,6 @@ jobs:
         COMMIT_ID="$GITHUB_SHA"
         COMMIT_MESSAGE="$(git log --format=%B -n 1 $GITHUB_SHA)"
         COMMIT_LINK="https://github.com/$REPO_NAME/commit/$GITHUB_SHA"
-        CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA)
-        echo "Changed Files:"
-        echo "$CHANGED_FILES"
-        FILE_LIST=""
-
-        for FILE in $CHANGED_FILES; do
-          FILE_LIST="$FILE_LIST\n- $FILE"
-        done
 
         PAYLOAD="{
           \"attachments\": [
