@@ -16,7 +16,7 @@ jobs:
     - name: Get Changed Files
       id: get-changed-files
       run: |
-        CHANGED_FILES=$(git diff --name-only $GITHUB_SHA^..$GITHUB_SHA)
+        CHANGED_FILES=$(git diff --name-only $GITHUB_SHA)
         echo "::set-output name=changed_files::$CHANGED_FILES"
 
     - name: Send Slack Notification
