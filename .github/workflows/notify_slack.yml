@@ -18,7 +18,7 @@ jobs:
       uses: tj-actions/changed-files@v39
       with:
         separator: "\n"
-      
+
     - name: Send Slack Notification
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -32,12 +32,16 @@ jobs:
         COMMIT_MESSAGE="$(git log --format=%B -n 1 $GITHUB_SHA)"
         COMMIT_LINK="https://github.com/$REPO_NAME/commit/$GITHUB_SHA"
         MODIFIED_FILES="${{ steps.changed-files.outputs.all_modified_files }}"
+        DELETED_FILES="${{ steps.changed-files.outputs.deleted_files }}"
         
-        # Create links for each modified file
+        # Identify deleted files by comparing lists
         MODIFIED_FILES_LIST=""
         for FILE in $MODIFIED_FILES; do
-          FILE_LINK="<https://github.com/$REPO_NAME/blob/$GITHUB_SHA/$FILE|$FILE>"
-          MODIFIED_FILES_LIST="$MODIFIED_FILES_LIST\n- $FILE_LINK"
+          if [[ " ${DELETED_FILES} " =~ " $FILE " ]]; then
+            MODIFIED_FILES_LIST="$MODIFIED_FILES_LIST\n- ($FILE) (deleted)"
+          else
+            MODIFIED_FILES_LIST="$MODIFIED_FILES_LIST\n- $FILE"
+          fi
         done
 
         PAYLOAD="{
