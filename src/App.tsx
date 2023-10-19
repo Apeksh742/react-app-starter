@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-// Adding comment
+// Adding comment for slack testing
 function App() {
   return (
     <div className="App">
