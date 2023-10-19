@@ -16,6 +16,8 @@ jobs:
     - name: Get changed files
       id: changed-files
       uses: tj-actions/changed-files@v39
+      with:
+        separator: "\n"
       
     - name: Send Slack Notification
       env:
