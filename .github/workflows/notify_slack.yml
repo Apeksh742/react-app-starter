@@ -38,9 +38,10 @@ jobs:
         MODIFIED_FILES_LIST=""
         for FILE in $MODIFIED_FILES; do
           if [[ " ${DELETED_FILES} " =~ " $FILE " ]]; then
-            MODIFIED_FILES_LIST="$MODIFIED_FILES_LIST\n- ($FILE) (deleted)"
+            MODIFIED_FILES_LIST="$MODIFIED_FILES_LIST\n- $FILE (deleted)"
           else
-            MODIFIED_FILES_LIST="$MODIFIED_FILES_LIST\n- $FILE"
+            FILE_LINK="<https://github.com/$REPO_NAME/blob/$GITHUB_SHA/$FILE|$FILE>"
+            MODIFIED_FILES_LIST="$MODIFIED_FILES_LIST\n- $FILE_LINK"
           fi
         done
 
