@@ -18,26 +18,21 @@ jobs:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       run: |
         AUTHOR="$GITHUB_ACTOR"
+        AUTHOR_IMAGE="https://github.com/$AUTHOR.png"
+        REPO_NAME="$GITHUB_REPOSITORY"
+        EVENT_NAME="New Commit"
+        COMMIT_ID="$GITHUB_SHA"
         COMMIT_MESSAGE="$(git log --format=%B -n 1 $GITHUB_SHA)"
-        COMMIT_LINK="https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
+        COMMIT_LINK="https://github.com/$REPO_NAME/commit/$GITHUB_SHA"
         PAYLOAD="{
           \"attachments\": [
             {
               \"color\": \"#36a64f\",
-              \"title\": \"New Commit Notification\",
-              \"fields\": [
-                {
-                  \"title\": \"Author\",
-                  \"value\": \"$AUTHOR\",
-                  \"short\": true
-                },
-                {
-                  \"title\": \"Commit Message\",
-                  \"value\": \"$COMMIT_MESSAGE\",
-                  \"short\": false
-                }
-              ],
-              \"footer\": \"<${COMMIT_LINK}|View Commit>\"
+              \"author_name\": \"$AUTHOR\",
+              \"author_icon\": \"$AUTHOR_IMAGE\",
+              \"title\": \"$REPO_NAME\",
+              \"title_link\": \"https://github.com/$REPO_NAME\",
+              \"text\": \"$EVENT_NAME: <$COMMIT_LINK|$COMMIT_ID> $COMMIT_MESSAGE\"
             }
           ]
         }"
