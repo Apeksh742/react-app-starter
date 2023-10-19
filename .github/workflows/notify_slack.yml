@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out code
-      uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
       
     - name: Send Slack Notification
       env:
@@ -26,6 +26,8 @@ jobs:
         COMMIT_MESSAGE="$(git log --format=%B -n 1 $GITHUB_SHA)"
         COMMIT_LINK="https://github.com/$REPO_NAME/commit/$GITHUB_SHA"
         CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA)
+        echo "Changed Files:"
+        echo "$CHANGED_FILES"
         FILE_LIST=""
 
         for FILE in $CHANGED_FILES; do
