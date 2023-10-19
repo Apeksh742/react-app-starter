@@ -29,6 +29,8 @@ jobs:
         COMMIT_ID="$GITHUB_SHA"
         COMMIT_MESSAGE="$(git log --format=%B -n 1 $GITHUB_SHA)"
         COMMIT_LINK="https://github.com/$REPO_NAME/commit/$GITHUB_SHA"
+        ADDED_FILES="${{ steps.changed-files.outputs.added_files }}"
+        MODIFIED_FILES="${{ steps.changed-files.outputs.modified_files }}"
 
         PAYLOAD="{
           \"attachments\": [
