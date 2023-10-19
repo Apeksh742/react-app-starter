@@ -17,5 +17,28 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       run: |
-        MESSAGE="New commit pushed to the repository by $GITHUB_ACTOR. Commit message: $GITHUB_SHA"
-        curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$MESSAGE\"}" $SLACK_WEBHOOK_URL
+        AUTHOR="$GITHUB_ACTOR"
+        COMMIT_MESSAGE="$(git log --format=%B -n 1 $GITHUB_SHA)"
+        COMMIT_LINK="https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
+        PAYLOAD="{
+          \"attachments\": [
+            {
+              \"color\": \"#36a64f\",
+              \"title\": \"New Commit Notification\",
+              \"fields\": [
+                {
+                  \"title\": \"Author\",
+                  \"value\": \"$AUTHOR\",
+                  \"short\": true
+                },
+                {
+                  \"title\": \"Commit Message\",
+                  \"value\": \"$COMMIT_MESSAGE\",
+                  \"short\": false
+                }
+              ],
+              \"footer\": \"<${COMMIT_LINK}|View Commit>\"
+            }
+          ]
+        }"
+        curl -X POST -H 'Content-type: application/json' --data "$PAYLOAD" $SLACK_WEBHOOK_URL
