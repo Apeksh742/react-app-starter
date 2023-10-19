@@ -38,7 +38,7 @@ jobs:
               \"color\": \"#36a64f\",
               \"title\": \"$REPO_NAME\",
               \"title_link\": \"https://github.com/$REPO_NAME\",
-              \"text\": \"$EVENT_NAME: <$COMMIT_LINK|$COMMIT_MESSAGE>\",
+              \"text\": \"$EVENT_NAME: <$COMMIT_LINK|$COMMIT_MESSAGE>\nAdded Files:\n$ADDED_FILES\nModified Files:\n$MODIFIED_FILES\",
               \"footer_icon\": \"$AUTHOR_IMAGE\",
               \"footer\": \"<${AUTHOR_PROFILE}|$AUTHOR>\"
             }
