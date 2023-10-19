@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
     - name: Get changed files
       id: changed-files
@@ -23,10 +23,10 @@ jobs:
           echo "$file was added"
         done
         
-    - name: List all added files
+    - name: List all changed files
       run: |
         for file in ${{ steps.changed-files.outputs.modified_files }}; do
-          echo "$file was modifies"
+          echo "$file was modified"
         done
       
     - name: Send Slack Notification
@@ -41,6 +41,8 @@ jobs:
         COMMIT_ID="$GITHUB_SHA"
         COMMIT_MESSAGE="$(git log --format=%B -n 1 $GITHUB_SHA)"
         COMMIT_LINK="https://github.com/$REPO_NAME/commit/$GITHUB_SHA"
+        ADDED_FILES="${{ steps.changed-files.outputs.added_files }}"
+        MODIFIED_FILES="${{ steps.changed-files.outputs.modified_files }}"
 
         PAYLOAD="{
           \"attachments\": [
@@ -48,9 +50,9 @@ jobs:
               \"color\": \"#36a64f\",
               \"title\": \"$REPO_NAME\",
               \"title_link\": \"https://github.com/$REPO_NAME\",
-              \"text\": \"$EVENT_NAME: <$COMMIT_LINK|$COMMIT_MESSAGE>\nChanged Files:\n$FILE_LIST\",
-              \"footer_icon\": \"$AUTHOR_IMAGE\",
-              \"footer\": \"<${AUTHOR_PROFILE}|$AUTHOR>\"
+              \"text\": "$EVENT_NAME: <$COMMIT_LINK|$COMMIT_MESSAGE>\nAdded Files:\n$ADDED_FILES\nModified Files:\n$MODIFIED_FILES",
+              \"footer_icon\": "$AUTHOR_IMAGE",
+              \"footer\": "<${AUTHOR_PROFILE}|$AUTHOR>"
             }
           ]
         }"
