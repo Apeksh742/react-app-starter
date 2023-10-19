@@ -29,11 +29,10 @@ jobs:
           \"attachments\": [
             {
               \"color\": \"#36a64f\",
-              \"author_name\": \"<$AUTHOR_PROFILE|<$AUTHOR>>\",
-              \"author_icon\": \"$AUTHOR_IMAGE\",
               \"title\": \"$REPO_NAME\",
               \"title_link\": \"https://github.com/$REPO_NAME\",
-              \"text\": \"$EVENT_NAME: <$COMMIT_LINK|$COMMIT_ID> $COMMIT_MESSAGE\"
+              \"text\": \"$EVENT_NAME: <$COMMIT_LINK|$COMMIT_ID> <$AUTHOR_PROFILE|$AUTHOR> $COMMIT_MESSAGE\",
+              \"author_icon\": \"$AUTHOR_IMAGE\"
             }
           ]
         }"
