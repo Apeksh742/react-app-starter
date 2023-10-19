@@ -16,7 +16,7 @@ jobs:
     - name: Get Changed Files
       id: get-changed-files
       run: |
-        CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA)
+        CHANGED_FILES=$(git diff --name-only $GITHUB_SHA^..$GITHUB_SHA)
         echo "::set-output name=changed_files::$CHANGED_FILES"
 
     - name: Send Slack Notification
@@ -42,7 +42,7 @@ jobs:
           \"attachments\": [
             {
               \"color\": \"#36a64f\",
-              \"title\": \"$REPO_NAME\",
+              \"title": \"$REPO_NAME\",
               \"title_link\": \"https://github.com/$REPO_NAME\",
               \"text\": \"$EVENT_NAME: <$COMMIT_LINK|$COMMIT_MESSAGE>\nChanged Files:\n$FILE_LIST\",
               \"footer_icon\": \"$AUTHOR_IMAGE\",
